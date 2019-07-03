@@ -104,6 +104,11 @@ class AtomsData(Dataset):
             atmsrw = conn.get(1)
             db_properties = list(atmsrw.data.keys())
             db_properties = [prop for prop in db_properties if not prop.startswith("_")]
+            if db_properties == []:
+                if hasattr(atmsrw,'energy'):
+                    db_properties.append('energy')
+                if hasattr(atmsrw,'forces'):
+                    db_properties.append('forces')
         # check if properties match
         if available_properties is None or set(db_properties) == set(
             available_properties
